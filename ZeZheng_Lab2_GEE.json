@@ -17,10 +17,8 @@ var distinctDOY = col.filterDate('2013-01-01', '2014-01-01');
 // Define a filter that identifies which images from the complete collection
 // match the DOY from the distinct DOY collection.
 var filter = ee.Filter.equals({leftField: 'doy', rightField: 'doy'});
-
 // Define a join.
 var join = ee.Join.saveAll('doy_matches');
-
 // Apply the join and convert the resulting FeatureCollection to an
 // ImageCollection.
 var joinCol = ee.ImageCollection(join.apply(distinctDOY, col, filter));
@@ -41,7 +39,6 @@ var visParams = {
     '012E01', '011D01', '011301'
   ],
 };
-
 // Create RGB visualization images for use as animation frames.
 var rgbVis = comp.map(function(img) {
   return img.visualize(visParams).clip(mask);
@@ -53,6 +50,5 @@ var gifParams = {
   'crs': 'EPSG:3857',
   'framesPerSecond': 10
 };
-
 // Print the GIF URL to the console.
 print(rgbVis.getVideoThumbURL(gifParams));
